@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bizzy — Idea to website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf8f4; --card:#ffffff; --border:#e8e3d8; --text:#211f1a; --sub:#75705f;
+  --accent:#5b4fd1; --accent2:#e8734a; --accent-light:#efedfd; --accent-dark:#332a8f;
+  --success:#0f6e56; --success-bg:#e1f5ee;
+  --shadow: 0 1px 2px rgba(30,25,10,0.04), 0 8px 24px rgba(30,25,10,0.06);
+}
+:root[data-theme="dark"]{
+  --bg:#15140f; --card:#1e1c17; --border:#332f26; --text:#f3f1e9; --sub:#a29c8a;
+  --accent:#8b80f0; --accent2:#f0916b; --accent-light:#28234f; --accent-dark:#efedfd;
+  --success:#5dcaa5; --success-bg:#0e2a23;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15140f; --card:#1e1c17; --border:#332f26; --text:#f3f1e9; --sub:#a29c8a;
+    --accent:#8b80f0; --accent2:#f0916b; --accent-light:#28234f; --accent-dark:#efedfd;
+    --success:#5dcaa5; --success-bg:#0e2a23;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
+body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+.topbar{border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:840px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:16px;}
+.brand-name{font-family:'Fraunces',serif;font-weight:600;font-size:19px;}
+.wrap{max-width:840px;margin:0 auto;padding:36px 24px 70px;}
+.hero{text-align:center;margin-bottom:32px;}
+.hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:36px;line-height:1.15;margin:0 0 12px;letter-spacing:-0.01em;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero p{color:var(--sub);font-size:16px;max-width:480px;margin:0 auto;line-height:1.6;}
+.status{font-size:13px;color:var(--success);background:var(--success-bg);padding:10px 14px;border-radius:10px;margin-bottom:16px;display:none;text-align:center;}
+.status.show{display:block;}
+.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:5px;margin-bottom:28px;box-shadow:var(--shadow);}
+.tab{flex:1;text-align:center;padding:11px 10px;font-size:14px;font-weight:600;color:var(--sub);cursor:pointer;border-radius:10px;transition:all .15s ease;white-space:nowrap;}
+.tab.active{color:#fff;background:var(--text);}
+.panel{display:none;animation:fade .25s ease;}
+.panel.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:18px;box-shadow:var(--shadow);}
+label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;}
+select,input[type=text]{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:15px;margin-bottom:16px;font-family:inherit;transition:border-color .15s;}
+select:focus,input[type=text]:focus{outline:none;border-color:var(--accent);}
+button{cursor:pointer;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);padding:12px 18px;font-size:14.5px;font-weight:600;font-family:inherit;transition:transform .1s, opacity .15s;}
+button:active{transform:scale(0.98);}
+button.primary{background:var(--text);color:var(--bg);border-color:var(--text);}
+@media (prefers-color-scheme:dark){button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}}
+:root[data-theme="dark"] button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+.idea-eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px;}
+.idea-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin:0 0 10px;}
+.idea-desc{font-size:15px;color:var(--sub);line-height:1.6;margin:0 0 16px;}
+.pill{display:inline-block;background:var(--accent-light);color:var(--accent-dark);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-right:6px;margin-bottom:6px;}
+.site-preview{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--shadow);}
+.site-hero{padding:56px 32px;text-align:center;}
+.site-hero h2{margin:0 0 10px;font-size:30px;font-family:'Fraunces',serif;font-weight:600;}
+.site-hero p{margin:0 0 22px;opacity:0.85;font-size:15.5px;}
+.site-btn{display:inline-block;padding:12px 26px;border-radius:10px;font-weight:700;font-size:14px;}
+.site-section{padding:32px;border-top:1px solid rgba(0,0,0,0.07);}
+.site-section h3{font-family:'Fraunces',serif;font-weight:600;margin:0 0 12px;}
+.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+.plan{border:1px solid var(--border);border-radius:16px;padding:22px;background:var(--card);}
+.plan.featured{border:2px solid var(--accent);position:relative;box-shadow:0 4px 20px rgba(91,79,209,0.15);}
+.plan h3{margin:0 0 6px;font-size:17px;font-family:'Fraunces',serif;font-weight:600;}
+.plan .price{font-size:28px;font-weight:700;margin:6px 0 14px;font-family:'Fraunces',serif;}
+.plan ul{margin:0 0 18px;padding-left:0;list-style:none;font-size:13.5px;color:var(--sub);}
+.plan li{padding:5px 0 5px 22px;position:relative;}
+.plan li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700;}
+.badge-pro{position:absolute;top:-11px;left:22px;background:var(--accent);color:#fff;font-size:11px;padding:4px 12px;border-radius:20px;font-weight:700;letter-spacing:0.02em;}
+.subtext{font-size:14px;color:var(--sub);margin:0 0 16px;line-height:1.6;}
+.actionrow{margin-top:16px;display:flex;gap:10px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-name">Bizzy</div>
+    </div>
+    <div style="font-size:13px;color:var(--sub);">Idea to website</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Your next <em>business</em>,<br>built in minutes.</h1>
+    <p>Generate a business idea, then turn it into a working website — right here.</p>
+  </div>
+
+  <div id="statusMsg" class="status"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="idea">Idea helper</div>
+    <div class="tab" data-tab="builder">Website builder</div>
+    <div class="tab" data-tab="pricing">Subscription</div>
+  </div>
+
+  <div class="panel active" id="panel-idea">
+    <div class="card">
+      <label>Industry / interest area</label>
+      <select id="ideaIndustry">
+        <option value="any">Surprise me</option>
+        <option value="food">Food and drink</option>
+        <option value="tech">Tech and software</option>
+        <option value="wellness">Health and wellness</option>
+        <option value="creative">Creative and design</option>
+        <option value="local">Local services</option>
+        <option value="edu">Education</option>
+      </select>
+      <label>Budget to start</label>
+      <select id="ideaBudget">
+        <option value="low">Under $1,000</option>
+        <option value="mid">$1,000 – $10,000</option>
+        <option value="high">$10,000+</option>
+      </select>
+      <button class="primary" onclick="generateIdea()" style="width:100%">Generate idea</button>
+    </div>
+    <div id="ideaResult"></div>
+  </div>
+
+  <div class="panel" id="panel-builder">
+    <div class="card">
+      <label>Business name</label>
+      <input type="text" id="siteName" placeholder="e.g. Maple & Co" oninput="renderSite()">
+      <label>Tagline</label>
+      <input type="text" id="siteTag" placeholder="e.g. Handmade goods, honestly priced" oninput="renderSite()">
+      <div class="controls-grid">
+        <div>
+          <label>Style</label>
+          <select id="siteStyle" onchange="renderSite()">
+            <option value="minimal">Minimal</option>
+            <option value="bold">Bold</option>
+            <option value="warm">Warm</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div>
+          <label>Layout</label>
+          <select id="siteLayout" onchange="renderSite()">
+            <option value="landing">Landing page</option>
+            <option value="services">Services page</option>
+            <option value="portfolio">Portfolio</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="sitePreview" class="site-preview"></div>
+    <div class="actionrow">
+      <button onclick="exportSite()">Export HTML</button>
+      <button class="primary" onclick="publishSite()">Publish site <span id="pubLock">🔒</span></button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-pricing">
+    <div class="card">
+      <p class="subtext">Free plan gives you a taste. Upgrade to unlock exporting and publishing.</p>
+      <div class="plan-grid">
+        <div class="plan">
+          <h3>Free</h3>
+          <div class="price">$0</div>
+          <ul>
+            <li>3 ideas per day</li>
+            <li>Website preview only</li>
+            <li>Watermarked pages</li>
+          </ul>
+          <button id="freeBtn" style="width:100%">Current plan</button>
+        </div>
+        <div class="plan featured">
+          <div class="badge-pro">Most popular</div>
+          <h3>Pro</h3>
+          <div class="price">$12<span style="font-size:13px;color:var(--sub);font-weight:400;font-family:'Inter',sans-serif;">/mo</span></div>
+          <ul>
+            <li>Unlimited ideas</li>
+            <li>Export and publish sites</li>
+            <li>No watermark</li>
+            <li>Custom domains (soon)</li>
+          </ul>
+          <button class="primary" style="width:100%" onclick="subscribe()">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ideas = {
+  food: [
+    ["Neighborhood meal-prep service","Weekly ready-to-heat meals for busy professionals, delivered locally."],
+    ["Pop-up specialty coffee cart","A mobile espresso cart for farmers markets, offices, and events."],
+    ["Small-batch hot sauce brand","Locally sourced peppers turned into a line of bottled hot sauces sold online and in shops."]
+  ],
+  tech: [
+    ["Booking software for small studios","A simple scheduling app for yoga studios, salons, and tutors."],
+    ["AI resume reviewer for niche fields","A tool that tailors resume feedback to specific industries like trades or healthcare."],
+    ["Local business review widget","Embeddable review widgets small businesses can add to their own sites."]
+  ],
+  wellness: [
+    ["Mobile stretch and recovery studio","On-site guided stretching sessions for offices and gyms."],
+    ["Subscription supplement box","Personalized monthly vitamin packs based on a short quiz."],
+    ["Outdoor group fitness club","Paid membership for scheduled outdoor workouts in local parks."]
+  ],
+  creative: [
+    ["Custom pet portrait shop","Hand-illustrated or AI-assisted pet portraits sold as prints and merchandise."],
+    ["Small business branding studio","Affordable logo and brand kits for solo founders and local shops."],
+    ["Wedding stationery design service","Custom invitation suites for couples planning weddings."]
+  ],
+  local: [
+    ["On-demand handyman dispatch","A simple app matching homeowners with vetted local handymen."],
+    ["Eco-friendly cleaning service","Home and office cleaning using only non-toxic products."],
+    ["Mobile car detailing","Detailing service that comes to the customer's driveway or office lot."]
+  ],
+  edu: [
+    ["Weekend coding camp for kids","In-person or virtual coding classes for ages 8-14."],
+    ["Test-prep tutoring co-op","A shared platform connecting tutors with students for SAT/ACT prep."],
+    ["Adult skills workshop series","Evening classes teaching practical skills like budgeting or home repair."]
+  ]
+};
+const budgetNote = {low:"Startup cost stays low — mostly time and a website.",mid:"Plan for some inventory, tools, or basic marketing spend.",high:"Room for hiring help or investing in equipment early."};
+
+let ideaCount = 0;
+const FREE_IDEA_LIMIT = 3;
+let subscribed = localStorage.getItem('bizzy_pro') === '1';
+
+function updateLockUI(){
+  document.getElementById('pubLock').style.display = subscribed ? 'none' : 'inline';
+  const freeBtn = document.getElementById('freeBtn');
+  if(subscribed){ freeBtn.textContent = 'Included in Pro'; }
+}
+updateLockUI();
+
+function showStatus(msg){
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3500);
+}
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+function generateIdea(){
+  if(!subscribed && ideaCount >= FREE_IDEA_LIMIT){
+    document.getElementById('ideaResult').innerHTML = '<div class="card"><p class="subtext" style="margin-bottom:14px;">You have used your free ideas for now.</p><button class="primary" onclick="document.querySelector(\'[data-tab=pricing]\').click()" style="width:100%">See subscription options</button></div>';
+    return;
+  }
+  let industry = document.getElementById('ideaIndustry').value;
+  if(industry === 'any'){
+    const keys = Object.keys(ideas);
+    industry = keys[Math.floor(Math.random()*keys.length)];
+  }
+  const list = ideas[industry];
+  const pick = list[Math.floor(Math.random()*list.length)];
+  const budget = document.getElementById('ideaBudget').value;
+  ideaCount++;
+  document.getElementById('ideaResult').innerHTML = `
+    <div class="card">
+      <p class="idea-eyebrow">Idea ${ideaCount}</p>
+      <p class="idea-title">${pick[0]}</p>
+      <p class="idea-desc">${pick[1]}</p>
+      <span class="pill">${industry}</span><span class="pill">${budgetNote[budget]}</span>
+      <div class="actionrow">
+        <button class="primary" onclick="useIdeaInBuilder('${pick[0].replace(/'/g,"\\'")}','${pick[1].replace(/'/g,"\\'")}')" style="width:100%">Use this to build a website</button>
+      </div>
+    </div>`;
+}
+
+function useIdeaInBuilder(name, desc){
+  document.getElementById('siteName').value = name;
+  document.getElementById('siteTag').value = desc;
+  document.querySelector('[data-tab=builder]').click();
+  renderSite();
+}
+
+const styles = {
+  minimal:{bg:'#ffffff',text:'#1c1b19',accent:'#1c1b19',btnText:'#fff'},
+  bold:{bg:'#fff3e6',text:'#4a1b0c',accent:'#d85a30',btnText:'#fff'},
+  warm:{bg:'#faf3ea',text:'#412402',accent:'#ba7517',btnText:'#fff'},
+  dark:{bg:'#1c1b19',text:'#f1efe8',accent:'#8b80f0',btnText:'#fff'}
+};
+
+function renderSite(){
+  const name = document.getElementById('siteName').value || 'Your business name';
+  const tag = document.getElementById('siteTag').value || 'Your tagline goes here';
+  const styleKey = document.getElementById('siteStyle').value;
+  const layout = document.getElementById('siteLayout').value;
+  const s = styles[styleKey];
+  let sections = '';
+  if(layout === 'landing'){
+    sections = `<div class="site-section" style="color:${s.text}"><h3>Why choose us</h3><p style="opacity:0.8;margin:0;line-height:1.6;">A short line about what makes ${escapeHtml(name)} different, and why customers should care.</p></div>`;
+  } else if(layout === 'services'){
+    sections = `<div class="site-section" style="color:${s.text}"><h3>Services</h3>
+      <p style="margin:0 0 8px;opacity:0.8;line-height:1.6;">Service one — a short description.</p>
+      <p style="margin:0 0 8px;opacity:0.8;line-height:1.6;">Service two — a short description.</p>
+      <p style="margin:0;opacity:0.8;line-height:1.6;">Service three — a short description.</p></div>`;
+  } else {
+    sections = `<div class="site-section" style="color:${s.text}"><h3>Selected work</h3><p style="opacity:0.8;margin:0;line-height:1.6;">A gallery of past projects would appear here.</p></div>`;
+  }
+  document.getElementById('sitePreview').innerHTML = `
+    <div class="site-hero" style="background:${s.bg};color:${s.text}">
+      <h2>${escapeHtml(name)}</h2>
+      <p>${escapeHtml(tag)}</p>
+      <span class="site-btn" style="background:${s.accent};color:${s.btnText}">Get started</span>
+    </div>
+    ${sections}`;
+}
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+renderSite();
+
+function exportSite(){
+  if(!subscribed){
+    showStatus('Exporting is a Pro feature — check the subscription tab.');
+    return;
+  }
+  const html = document.getElementById('sitePreview').outerHTML;
+  const blob = new Blob([`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${document.getElementById('siteName').value||'My site'}</title></head><body>${html}</body></html>`], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'website.html'; a.click();
+  URL.revokeObjectURL(url);
+}
+function publishSite(){
+  if(!subscribed){
+    showStatus('Publishing is a Pro feature — check the subscription tab.');
+    return;
+  }
+  showStatus('Site published (demo only — no real hosting is connected).');
+}
+function subscribe(){
+  subscribed = true;
+  localStorage.setItem('bizzy_pro','1');
+  updateLockUI();
+  showStatus('You are now on Pro. Ideas, export, and publish are unlocked.');
+}
+</script>
+</body>
+</html>
